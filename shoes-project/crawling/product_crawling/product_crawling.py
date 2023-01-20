@@ -50,7 +50,7 @@ time.sleep(2)
 with open('crawling\\url_crawling\\products.txt', 'r') as file:    
     line = None    # 변수 line을 None으로 초기화
     while line != '':
-        line = [file.readline()]
+        line = file.readline().split(" ")
         print(line)
         for product_url in line:
             print("product", product_url)
@@ -99,8 +99,13 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
             # print("색상: \n", color[:2])
 
             # 정가 변수 받기 | XPATH 사용
-            price_og = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[2]/div/dl/div[4]/dd').text
-            price_og = int(price_og[:-1].replace(",", ""))
+            try:
+                price_og = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[2]/div/dl/div[4]/dd').text
+                price_og = int(price_og[:-1].replace(",", ""))
+            except:
+                price_og = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[2]/div/dl/div[4]/dd').text
+                price_og = int(price_og.split("약 ")[1].split("원")[0].replace(",",""))
+               
             # print("정가: \n" ,price_og)
 
             # 최근 거래가 받기(로그인 필요함) | XPATH 사용  
@@ -129,6 +134,6 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
             with open('crawling\product_crawling\product_data.csv', "a", newline='') as f:
                 write = csv.writer(f)
 
-                write.writerow([product_id, img_path, brand, name, color[0], color[1], price_og, AVG])
+                write.writerow([product_id, img_path, brand,  color[0], color[1], price_og, AVG])
 
             time.sleep(2)
