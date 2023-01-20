@@ -1,14 +1,15 @@
 최종적으로는 django, sql을 사용한 서비스 제공
 
 1. jordan 1600/3200
-2. nike 4500/9194
-3. new balance 1000/2054
-4. adidas 1500/2794
-5. converse 901/901
-6. salomon 275/275
-7. mihara yasuhiro 413/413
-8. asics 684/684
-9. maison margiela 272/272
+2. nike 1600/9194
+3. new balance 1600/2054
+4. adidas 1600/2794
+5. converse 880/901
+6. salomon 240/275
+7. mihara yasuhiro 400/413
+8. asics 680/684
+9. maison margiel  240/272
+
 
 
 위 방법이 아니라 product id로 접근을 하는 것도 좋아보인다.

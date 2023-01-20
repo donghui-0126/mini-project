@@ -76,12 +76,15 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
             # 사이즈 줄이기 + 흑백으로 만들기.
             # channel 한개로 군집화를 진행할 것이다.
             # 색상 정보는 따로 저장할 것이다.
-            resp = urllib.request.urlopen(img_url)
-            image = np.asarray(bytearray(resp.read()), dtype='uint8')
-            image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-            image = cv2.resize(image, (256,256), interpolation=cv2.INTER_AREA)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
+            try:
+                resp = urllib.request.urlopen(img_url)
+                image = np.asarray(bytearray(resp.read()), dtype='uint8')
+                image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+                image = cv2.resize(image, (256,256), interpolation=cv2.INTER_AREA)
+                image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            except:
+                print(product_id, "에서 오류발생")
+                continue
 
             # 전처리된 이미지 이미지 폴더에 저장
             img_path = 'crawling\\product_crawling\\image\\' + product_id + ".jpg"
@@ -109,8 +112,11 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
             # print("정가: \n" ,price_og)
 
             # 최근 거래가 받기(로그인 필요함) | XPATH 사용  
-            price1 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[1]/td[2]').text
-            price1 = int(price1.split("원")[0].replace(",", ""))
+            try:
+                price1 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[1]/td[2]').text
+                price1 = int(price1.split("원")[0].replace(",", ""))
+            except:
+                print(product_id, "에서 오류 발생")
 
             price2 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[2]/td[2]').text
             price2 = int(price2.split("원")[0].replace(",", ""))
@@ -133,7 +139,8 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
             # columns = ["product_id", "img_path","brand", "name", "color1", "color2", "price_og", "price_resell"]
             with open('crawling\product_crawling\product_data.csv', "a", newline='') as f:
                 write = csv.writer(f)
-
-                write.writerow([product_id, img_path, brand,  color[0], color[1], price_og, AVG])
-
+                try:
+                    write.writerow([product_id, img_path, brand,  color[0], color[1], price_og, AVG])
+                except:
+                    write.writerow([product_id, img_path, brand,  color[0], price_og, AVG])
             time.sleep(2)

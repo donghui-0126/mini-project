@@ -1,12 +1,176 @@
 product_id,img_path,brand,name,color1,color2,price_og,price_resell
-12831,crawling\product_crawling\image\12831.jpg,Nike,WHITE,WHITE,139000,136400
-21935,crawling\product_crawling\image\21935.jpg,Nike,FLAX,GUM,169000,186600
-28029,crawling\product_crawling\image\28029.jpg,Nike,WHITE,BLACK,129000,153200
-44653,crawling\product_crawling\image\44653.jpg,Nike,FLAX,FLAX-GUM LIGHT BROWN,185400,286400
-89548,crawling\product_crawling\image\89548.jpg,Nike,LIGHTT IRON ORE,METALLIC SILVER,209000,255800
-ts/36,crawling\product_crawling\image\ts/36.jpg,Nike,BLACK,BLACK,129000,141400
-50694,crawling\product_crawling\image\50694.jpg,Nike,PURE PLATINUM,WHITE,129000,254200
-92597,crawling\product_crawling\image\92597.jpg,Nike,BLACK,WHITE,139000,168000
-80149,crawling\product_crawling\image\80149.jpg,Nike,SAIL,MALACHITE,139000,160600
-88045,crawling\product_crawling\image\88045.jpg,Nike,IRON GREY,WHITE,219000,304200
-75302,crawling\product_crawling\image\75302.jpg,Nike,DARK SULFUR,WHITE,129900,241600
+28029,crawling\product_crawling\image\28029.jpg,Nike,WHITE,BLACK,129000,148600
+12831,crawling\product_crawling\image\12831.jpg,Nike,WHITE,WHITE,139000,136200
+21935,crawling\product_crawling\image\21935.jpg,Nike,FLAX,GUM,169000,188600
+44653,crawling\product_crawling\image\44653.jpg,Nike,FLAX,FLAX-GUM LIGHT BROWN,185400,301000
+89548,crawling\product_crawling\image\89548.jpg,Nike,LIGHTT IRON ORE,METALLIC SILVER,209000,250200
+92597,crawling\product_crawling\image\92597.jpg,Nike,BLACK,WHITE,139000,143400
+ts/36,crawling\product_crawling\image\ts/36.jpg,Nike,BLACK,BLACK,129000,143200
+94650,crawling\product_crawling\image\94650.jpg,Nike,VAST GREY,VAST GREY,189000,223000
+80149,crawling\product_crawling\image\80149.jpg,Nike,SAIL,MALACHITE,139000,154800
+50694,crawling\product_crawling\image\50694.jpg,Nike,PURE PLATINUM,WHITE,129000,258200
+88045,crawling\product_crawling\image\88045.jpg,Nike,IRON GREY,WHITE,219000,325000
+78768,crawling\product_crawling\image\78768.jpg,Nike,SAIL,MIDNIGHT NAVY,139000,260600
+23632,crawling\product_crawling\image\23632.jpg,Nike,WHITE,WHITE-WHITE,145800,243600
+75302,crawling\product_crawling\image\75302.jpg,Nike,DARK SULFUR,WHITE,129900,244000
+94652,crawling\product_crawling\image\94652.jpg,Nike,ANTHRACITE,ANTHRACITE,189000,214600
+74799,crawling\product_crawling\image\74799.jpg,Nike,PALE IVORY,BLACK,139000,269200
+49016,crawling\product_crawling\image\49016.jpg,Nike,BLACK,DARK SULFUR-WHITE-BLACK,139000,261000
+64170,crawling\product_crawling\image\64170.jpg,Nike,CHOCOLATE,CREAM,179000,253000
+23626,crawling\product_crawling\image\23626.jpg,Nike,BLACK,BLACK-BLACK,145800,249000
+73952,crawling\product_crawling\image\73952.jpg,Nike,WHITE,UNIVERSITY RED,219000,270000
+89856,crawling\product_crawling\image\89856.jpg,Nike,VIVID GREEN,BLACK,247200,262600
+72745,crawling\product_crawling\image\72745.jpg,Nike,GREY FOG,LIGHT CRIMSON,139000,272000
+80145,crawling\product_crawling\image\80145.jpg,Nike,WHITE,BLACK,139000,141200
+95258,crawling\product_crawling\image\95258.jpg,Nike,WHITE,PINK BLAST,139000,206600
+25620,crawling\product_crawling\image\25620.jpg,Nike,WHITE,BLACK-WHITE,219000,754000
+65219,crawling\product_crawling\image\65219.jpg,Nike,LIGHT CREAM,WHITE-LIGHT BONE,135900,402400
+60362,crawling\product_crawling\image\60362.jpg,Nike,WHITE,BLACK-BLACK,395500,455400
+43374,crawling\product_crawling\image\43374.jpg,Nike,SAIL,STARFISH-BLACK,129000,266800
+60294,crawling\product_crawling\image\60294.jpg,Nike,BLACK,LIGHT BONE,179000,226800
+39448,crawling\product_crawling\image\39448.jpg,Nike,BLUE VOID,OBSIDIAN,209000,416800
+52608,crawling\product_crawling\image\52608.jpg,Nike,DARK SMOKE GREY,IRON GREY,219000,215000
+45030,crawling\product_crawling\image\45030.jpg,Nike,WHITE,WHITE-WHITE,219000,272800
+83075,crawling\product_crawling\image\83075.jpg,Nike,WHITE,WHITE,189000,202400
+59968,crawling\product_crawling\image\59968.jpg,Nike,VALERIAN BLUE,VALERIAN BLUE,129000,263600
+44512,crawling\product_crawling\image\44512.jpg,Nike,BAROQUE BROWN,LEMON DROP-WHEAT-CHILE RED,189000,359000
+79958,crawling\product_crawling\image\79958.jpg,Nike,WHITE,NEUTRAL GREY,129000,149600
+83266,crawling\product_crawling\image\83266.jpg,Nike,COASTAL BLUE,COASTAL BLUE,139000,194200
+43677,crawling\product_crawling\image\43677.jpg,Nike,BLACK,SAIL,209000,361800
+82792,crawling\product_crawling\image\82792.jpg,Nike,WHITE,VARSITY ROYAL,129000,220200
+82791,crawling\product_crawling\image\82791.jpg,Nike,WHITE,ORANGE BLAZE,129000,245800
+88069,crawling\product_crawling\image\88069.jpg,Nike,MUSHROOM,MUSHROOM,189000,260000
+10917,crawling\product_crawling\image\10917.jpg,Nike,WHITE,WOLF GREY-BLACK,197700,132200
+43604,crawling\product_crawling\image\43604.jpg,Nike,COCONUT MILK,SEAFOAM-YELLOW STRIKE,149000,406400
+42255,crawling\product_crawling\image\42255.jpg,Nike,NEUTRAL GREY,OBSIDIAN-COOL GREY,219000,282200
+89154,crawling\product_crawling\image\89154.jpg,Nike,SAIL,NOBLE GREEN,149000,158400
+42390,crawling\product_crawling\image\42390.jpg,Nike,SAIL,BLACK-BLACK-CHILE RED,119000,181800
+/9655,crawling\product_crawling\image\/9655.jpg,Nike,SAIL,MIDNIGHT NAVY-GUM YELLOW,109000,105400
+41020,crawling\product_crawling\image\41020.jpg,Nike,BLACK,OFF-NOIR-OFF-NOIR,219000,438400
+39449,crawling\product_crawling\image\39449.jpg,Nike,LT SMOKE GREY,WHITE-BLACK,209000,615400
+39142,crawling\product_crawling\image\39142.jpg,Nike,SAIL,NEUTRAL GREY,219000,549600
+50233,crawling\product_crawling\image\50233.jpg,Nike,LIGHT SMOKE GREY,MARINA,135900,297600
+82257,crawling\product_crawling\image\82257.jpg,Nike,METALLIC SILVER,VARSITY RED,219000,193200
+25688,crawling\product_crawling\image\25688.jpg,Nike,UNIVERSITY RED,UNIVERSITY RED,139000,221400
+44120,crawling\product_crawling\image\44120.jpg,Nike,BLACK,WHITE-METALLIC GOLD COIN,269000,234200
+71893,crawling\product_crawling\image\71893.jpg,Nike,GYM RED,GYM RED-WHITE,129000,175600
+88308,crawling\product_crawling\image\88308.jpg,Nike,PINE GREEN,CITRON TINT,229000,206000
+80111,crawling\product_crawling\image\80111.jpg,Nike,WHITE,SAIL,169000,173400
+88070,crawling\product_crawling\image\88070.jpg,Nike,SEQUOIA,SEQUOIA,189000,191600
+92979,crawling\product_crawling\image\92979.jpg,Nike,WHITE,WHITE,139000,142000
+67715,crawling\product_crawling\image\67715.jpg,Nike,LIGHT BONE,GOLD,209000,475800
+76884,crawling\product_crawling\image\76884.jpg,Nike,ORANGE,WHITE,139000,166600
+42331,crawling\product_crawling\image\42331.jpg,Nike,BLUE VOID,GREY FOG,119000,266600
+89169,crawling\product_crawling\image\89169.jpg,Nike,WHITE,HYPER ROYAL,149000,171600
+40775,crawling\product_crawling\image\40775.jpg,Nike,WHITE,SAIL-SAIL,219000,603800
+26197,crawling\product_crawling\image\26197.jpg,Nike,BLACK,SUMMIT WHITE,219000,1362000
+32264,crawling\product_crawling\image\32264.jpg,Nike,WHITE,BLACK,269000,311000
+67188,crawling\product_crawling\image\67188.jpg,Nike,WHITE,GREY FOG,232300,735400
+72410,crawling\product_crawling\image\72410.jpg,Nike,BLACK,WHITE-BLACK,249000,203600
+36489,crawling\product_crawling\image\36489.jpg,Nike,BLACK,BLACK,239000,225000
+45086,crawling\product_crawling\image\45086.jpg,Nike,CLAY GREEN,BLACK,259000,293000
+24901,crawling\product_crawling\image\24901.jpg,Nike,WHITE,BLACK-HABANERO RED,209000,253800
+61048,crawling\product_crawling\image\61048.jpg,Nike,RACER BLUE,WHITE,129000,144400
+54960,crawling\product_crawling\image\54960.jpg,Nike,WHITE,BLACK,139000,166000
+70511,crawling\product_crawling\image\70511.jpg,Nike,BLACK,UNIVERSITY GOLD,219000,180000
+65868,crawling\product_crawling\image\65868.jpg,Nike,GRAIN,PINK CLAY,159000,172600
+38844,crawling\product_crawling\image\38844.jpg,Nike,BLACK,WHITE-RED-BLUE,129000,253000
+68771,crawling\product_crawling\image\68771.jpg,Nike,WHITE,BLACK-ANTHRACITE-GREY FOG,179000,179200
+79358,crawling\product_crawling\image\79358.jpg,Nike,SAIL,NIGHT MAROON,139000,167400
+47887,crawling\product_crawling\image\47887.jpg,Nike,WHITE,COURT PURPLE,129000,204200
+70212,crawling\product_crawling\image\70212.jpg,Nike,PURE PLATINUM,WHITE,179000,222800
+62447,crawling\product_crawling\image\62447.jpg,Nike,PARTICLE GREY,DARK TEAL GREEN,199000,153200
+61232,crawling\product_crawling\image\61232.jpg,Nike,HYPER VIOLET,BLACK,339900,250400
+82073,crawling\product_crawling\image\82073.jpg,Nike,BLACK,ANTHRACITE,159000,156600
+26336,crawling\product_crawling\image\26336.jpg,Nike,BLACK,DARK GREY,259000,237000
+83796,crawling\product_crawling\image\83796.jpg,Nike,WHITE,METALIC GOLD,239000,222200
+78686,crawling\product_crawling\image\78686.jpg,Nike,BLACK,432600,281200
+25586,crawling\product_crawling\image\25586.jpg,Nike,SAIL,UNIVERSITY GOLD-INDUSTRIAL BLUE,129000,1017600
+33577,crawling\product_crawling\image\33577.jpg,Nike,DARK IRIS,CAMPFIRE ORANGE,219000,395000
+26732,crawling\product_crawling\image\26732.jpg,Nike,TOUR YELLOW,GORGE GREEN,219000,608600
+84854,crawling\product_crawling\image\84854.jpg,Nike,BLACK,VAST GREY,129000,303200
+26731,crawling\product_crawling\image\26731.jpg,Nike,STRING,BLACK-VILLAIN RED-NEPTUNE GREEN,219000,537200
+37502,crawling\product_crawling\image\37502.jpg,Nike,FIRE PINK,GYM RED-MOCHA-WHITE-ROYAL BLUE-BLACK,129000,343000
+27714,crawling\product_crawling\image\27714.jpg,Nike,GREEN APPLE,VOLT-CRIMSON-BLACK,219000,770800
+27559,crawling\product_crawling\image\27559.jpg,Nike,SAIL,MANTRA ORANGE,159000,301600
+93385,crawling\product_crawling\image\93385.jpg,Nike,SCREAM GREEN,BRIGHT CRIMSON,339000,312200
+72411,crawling\product_crawling\image\72411.jpg,Nike,PSYCHIC PINK,BLACK-PSYCHIC PINK,249000,386600
+41727,crawling\product_crawling\image\41727.jpg,Nike,VOLT,BLACK-RACER BLUE-MULTI,339900,319400
+54951,crawling\product_crawling\image\54951.jpg,Nike,WHITE,GREY,139000,134800
+88073,crawling\product_crawling\image\88073.jpg,Nike,PINK FLASH,GOLD,209000,281600
+60296,crawling\product_crawling\image\60296.jpg,Nike,FOSSIL,FOSSIL,179000,215200
+18969,crawling\product_crawling\image\18969.jpg,Nike,ANTHRACITE,ANTHRACITE-BLACK-WOLF GREY,197700,212600
+66859,crawling\product_crawling\image\66859.jpg,Nike,KHAKI,HAZEL RUSH,129000,169800
+26176,crawling\product_crawling\image\26176.jpg,Nike,VENEER,AUTUMN GREEN-DEEP PURPLE,119000,294200
+42229,crawling\product_crawling\image\42229.jpg,Nike,FLAX,WHEAT-GUM LIGHT BROWN,179000,156800
+85125,crawling\product_crawling\image\85125.jpg,Nike,PRALINE,DESERT OCHRE,139000,140800
+62446,crawling\product_crawling\image\62446.jpg,Nike,SPORT SPICE,COCONUT MILK,199000,118600
+58020,crawling\product_crawling\image\58020.jpg,Nike,LIGHT COGNAC,WHITE,129000,220800
+28180,crawling\product_crawling\image\28180.jpg,Nike,WHITE,BLACK,129000,181600
+60352,crawling\product_crawling\image\60352.jpg,Nike,NOBLE GREEN,UNIVERSITY GOLD,139000,172600
+76908,crawling\product_crawling\image\76908.jpg,Nike,MEDIUM BROWN,MINT FOAM,219000,126600
+85957,crawling\product_crawling\image\85957.jpg,Nike,CAVE PURPLE,METALLIC COPPER,139000,174600
+89215,crawling\product_crawling\image\89215.jpg,Nike,BLACK,WHITE,239000,262400
+12514,crawling\product_crawling\image\12514.jpg,Nike,BLACK,BLACK-BLACK,185400,201800
+70969,crawling\product_crawling\image\70969.jpg,Nike,BLACK,BLACK,159000,151000
+20837,crawling\product_crawling\image\20837.jpg,Nike,BLACK,WHITE-ANTHRACITE,197700,167200
+78687,crawling\product_crawling\image\78687.jpg,Nike,GLACIER GREY,432600,254000
+89857,crawling\product_crawling\image\89857.jpg,Nike,TOTAL ORANGE,BRIGHT CRIMSON,269000,210800
+63346,crawling\product_crawling\image\63346.jpg,Nike,LUCKY GREEN,METALIC GOLD,139000,204600
+88455,crawling\product_crawling\image\88455.jpg,Nike,MULTI COLOR,MULTI COLOR,249000,227600
+38231,crawling\product_crawling\image\38231.jpg,Nike,IRON GREY,WHITE,139000,186400
+72395,crawling\product_crawling\image\72395.jpg,Nike,WHITE,UNIVERSITY RED,179000,164400
+72017,crawling\product_crawling\image\72017.jpg,Nike,FLASH,WHITE,149000,134400
+37186,crawling\product_crawling\image\37186.jpg,Nike,WHITE,BLACK-TOTAL ORANGE,139000,132800
+75110,crawling\product_crawling\image\75110.jpg,Nike,PHANTOM,BLACK,239000,239000
+73786,crawling\product_crawling\image\73786.jpg,Nike,WHITE,BLACK,159000,189600
+45694,crawling\product_crawling\image\45694.jpg,Nike,WHITE,UNIVERSITY RED,129000,132800
+71988,crawling\product_crawling\image\71988.jpg,Nike,FOSSIL,BLACK-FOSSIL,249000,269200
+49586,crawling\product_crawling\image\49586.jpg,Nike,WHITE,PINE GREEN-SAIL-WHITE,135900,182200
+30660,crawling\product_crawling\image\30660.jpg,Nike,VARSITY RED,BLACK-WHITE,189000,200800
+32867,crawling\product_crawling\image\32867.jpg,Nike,WHITE,GUM LIGHT BROWN,139000,170400
+64246,crawling\product_crawling\image\64246.jpg,Nike,SAIL,SAIL,210100,172800
+72394,crawling\product_crawling\image\72394.jpg,Nike,WHITE,VARSITY ROYAL,179000,195800
+59198,crawling\product_crawling\image\59198.jpg,Nike,ATLANTIC BLUE,VOLTAGE YELLOW,219000,140600
+55826,crawling\product_crawling\image\55826.jpg,Nike,COURT PURPLE,WHITE,189000,219800
+42553,crawling\product_crawling\image\42553.jpg,Nike,BLACK,GOLDENROD-WHITE,119000,130200
+44513,crawling\product_crawling\image\44513.jpg,Nike,SATURN GOLD,TEA TREE MIST-TENT,189000,206200
+59561,crawling\product_crawling\image\59561.jpg,Nike,SAIL,SANDED GOLD-WHEAT GRASS-ORANGE-BLACK,139000,129200
+75153,crawling\product_crawling\image\75153.jpg,Nike,HABANERO RED,LASER BLUE,149000,145000
+22857,crawling\product_crawling\image\22857.jpg,Nike,BLACK,WHITE,219000,818400
+34573,crawling\product_crawling\image\34573.jpg,Nike,DEEP ROYAL BLUE,WHITE-PALE IVORY-BLACK,219000,402200
+43676,crawling\product_crawling\image\43676.jpg,Nike,NIGHT MAROON,PALE IVORY,209000,296200
+39170,crawling\product_crawling\image\39170.jpg,Nike,SAIL,NEUTRAL GREY,219000,427600
+26730,crawling\product_crawling\image\26730.jpg,Nike,BLACK,NEON YELLOW-LIGHT GRAPHITE,199000,323600
+69540,crawling\product_crawling\image\69540.jpg,Nike,DEEP ROYAL BLUE,WHITE,139000,330400
+26706,crawling\product_crawling\image\26706.jpg,Nike,WHITE,BLACK,219000,704600
+32655,crawling\product_crawling\image\32655.jpg,Nike,WHITE,TEAM GREEN,119000,453000
+25283,crawling\product_crawling\image\25283.jpg,Nike,VARSITY RED,WHITE-VARSITY RED-BLACK,119000,701400
+26022,crawling\product_crawling\image\26022.jpg,Nike,SAIL,SPORT FUCHSIA,219000,1360400
+23498,crawling\product_crawling\image\23498.jpg,Nike,BLACK,BLACK-PARACHUTE BEIGE-PETRA BROWN,179000,2047800
+33799,crawling\product_crawling\image\33799.jpg,Nike,WHITE,UNIVERSITY BLUE-WHITE,119000,376200
+20669,crawling\product_crawling\image\20669.jpg,Nike,GREEN,MULTI,179000,517200
+23680,crawling\product_crawling\image\23680.jpg,Nike,WHITE,BLACK-UNIVERSITY RED,189000,331000
+38818,crawling\product_crawling\image\38818.jpg,Nike,BLACK,WHITE-RED-BLUE,129000,302000
+20812,crawling\product_crawling\image\20812.jpg,Nike,BLUE JAY,SUMMIT WHITE-BLACK,189000,229600
+23997,crawling\product_crawling\image\23997.jpg,Nike,WHITE,UNIVERSITY RED,119000,433800
+23703,crawling\product_crawling\image\23703.jpg,Nike,FOSSIL,BLACK,189000,1052400
+69092,crawling\product_crawling\image\69092.jpg,Nike,BLACK,METALLIC SILVER-COMET RED,239000,658000
+23772,crawling\product_crawling\image\23772.jpg,Nike,COURT PURPLE,UNIVERSITY GOLD-BLACK-WHITE,219000,520200
+60866,crawling\product_crawling\image\60866.jpg,Nike,PLATINUM TINT,COCONUT MILK,219000,300600
+67189,crawling\product_crawling\image\67189.jpg,Nike,BLACK,BLACK-WHITE,232300,629800
+23213,crawling\product_crawling\image\23213.jpg,Nike,WHITE,UNIVERSITY RED-WHITE,219000,670600
+23442,crawling\product_crawling\image\23442.jpg,Nike,LIGHT BLUE FURY,LEMON WASH,197700,1027400
+29072,crawling\product_crawling\image\29072.jpg,Nike,BLUE CHILL,SAFETY ORANGE-BLACK-WHITE,119000,334200
+23446,crawling\product_crawling\image\23446.jpg,Nike,PINK,RED-WHITE,119000,1065400
+21951,crawling\product_crawling\image\21951.jpg,Nike,SUMMIT WHITE,WHITE-WOLF GREY-BLACK,197700,804200
+73233,crawling\product_crawling\image\73233.jpg,Nike,BLACK,BLACK-BLACK,395500,345200
+12117,crawling\product_crawling\image\12117.jpg,Nike,BLACK,VOLT-METALLIC SILVER-WHITE,197700,357000
+17474,crawling\product_crawling\image\17474.jpg,Nike,TRUE WHITE,BLACK-COCOA,137200,445400
+82303,crawling\product_crawling\image\82303.jpg,Nike,PINK FOAM,LIGHT ARCTIC PINK,189000,274800
+84378,crawling\product_crawling\image\84378.jpg,Nike,TOTAL ORANGE,BLACK,329000,313000
+25263,crawling\product_crawling\image\25263.jpg,Nike,WHITE,METALLIC GOLD-BLACK,219000,436600
+24985,crawling\product_crawling\image\24985.jpg,Nike,MYSTIC NAVY,MYSTIC NAVY-GUM LIGHT BROWN-SAIL,129000,327800
+10099,crawling\product_crawling\image\10099.jpg,Nike,METALLIC GOLD,WHITE,234800,489800
+40173,crawling\product_crawling\image\40173.jpg,Nike,PEARL WHITE,PALE IVORY-PECAN,169000,368800
+46710,crawling\product_crawling\image\46710.jpg,Nike,METALLIC SILVER,WHITE-BLACK-COCONUT MILK,227700,437000

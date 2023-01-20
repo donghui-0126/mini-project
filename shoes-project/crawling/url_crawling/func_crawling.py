@@ -39,7 +39,10 @@ def url_crawling(url:str, n:int) -> None:
     # pagedown을 통해서 창을 내리고 새로운 신발이 뜨게함 
     for cnt in range(n):
         for i in range(9):
-            body.send_keys(Keys.PAGE_DOWN)  
+            try:
+                body.send_keys(Keys.PAGE_DOWN)  
+            except:
+                continue
         time.sleep(3)
 
     elements = driver.find_elements(By.CLASS_NAME, 'item_inner')	#class 속성으로 접근
@@ -53,7 +56,6 @@ def url_crawling(url:str, n:int) -> None:
 
     f = open('crawling\\url_crawling\\products.txt', 'a')
     f.write(' '.join(products))
-    f.write("\n")
     f.close()
 
     print("end")
