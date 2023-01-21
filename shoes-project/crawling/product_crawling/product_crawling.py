@@ -27,33 +27,16 @@ with open('crawling\product_crawling\product_data.csv', 'w',newline='') as f:
 
 driver = webdriver.Chrome()
 
-#######
-email = ""
-password = ""
-#######
-login_url = "https://kream.co.kr/login"
-
-driver.get(login_url)
-
-# 이메일 작성
-driver.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[1]/div/div[1]/div/input').send_keys(email)
-time.sleep(0.5)
-# 비밀번호 작성
-driver.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[1]/div/div[2]/div/input').send_keys(password)
-time.sleep(0.5)
-# 로그인 클릭
-driver.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[1]/div/div[3]/a').click()
-
-time.sleep(2)
-'''
-'''
 with open('crawling\\url_crawling\\products.txt', 'r') as file:    
     line = None    # 변수 line을 None으로 초기화
     while line != '':
         line = file.readline().split(" ")
-        print(line)
-        for product_url in line:
-            print("product", product_url)
+        print("데이터셋 크기:", len(line))
+        
+        for nn, product_url in enumerate(line):
+            start = time.time()
+
+            print("product:", product_url)
             driver.get(product_url)
 
             # 신발의 번호를 product_id 변수에 저장함.
@@ -83,7 +66,7 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
                 image = cv2.resize(image, (256,256), interpolation=cv2.INTER_AREA)
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             except:
-                print(product_id, "에서 오류발생")
+                print(product_id, "에서 img-url 오류 발생")
                 continue
 
             # 전처리된 이미지 이미지 폴더에 저장
@@ -93,7 +76,7 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
 
             # 이름 변수 받기 | XPATH 사용
             brand = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[1]/div[1]/div/div/a').text
-            name = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[1]/div[1]/div/p[2]').text
+            name = driver.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[1]/div/div[2]/div/div[1]/div[1]/div/p[1]').text
             # print("브랜드: \n", brand, "\n신발명: \n",name)
 
             # 색상 변수 받기
@@ -112,25 +95,44 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
             # print("정가: \n" ,price_og)
 
             # 최근 거래가 받기(로그인 필요함) | XPATH 사용  
+            prices = np.array([])
+            
             try:
                 price1 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[1]/td[2]').text
                 price1 = int(price1.split("원")[0].replace(",", ""))
+                prices = np.append(prices, price1)
+           
             except:
-                print(product_id, "에서 오류 발생")
+                pass
 
-            price2 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[2]/td[2]').text
-            price2 = int(price2.split("원")[0].replace(",", ""))
+            try:
+                price2 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[2]/td[2]').text
+                price2 = int(price2.split("원")[0].replace(",", ""))
+                prices = np.append(prices, price1)
+            except:
+                pass 
 
-            price3 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[3]/td[2]').text
-            price3 = int(price3.split("원")[0].replace(",", ""))
+            try:
+                price3 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[3]/td[2]').text
+                price3 = int(price3.split("원")[0].replace(",", ""))
+                prices = np.append(prices, price3)
+            except:
+                pass
 
-            price4 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[4]/td[2]').text
-            price4 = int(price4.split("원")[0].replace(",", ""))
+            try:
+                price4 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[4]/td[2]').text
+                price4 = int(price4.split("원")[0].replace(",", ""))
+                prices = np.append(prices, price4)
+            except:
+                print(product_id, "의 최근거래 횟수가 4회 미만입니다.")
 
-            price5 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[5]/td[2]').text
-            price5 = int(price5.split("원")[0].replace(",", ""))
-
-            prices = np.array([price1,price2,price3,price4,price5])
+            try:
+                price5 = driver.find_element(By.XPATH,'//*[@id="panel1"]/div/table/tbody/tr[5]/td[2]').text
+                price5 = int(price5.split("원")[0].replace(",", ""))
+                prices = np.append(prices, price5)
+            except:
+                print(product_id, "의 최근거래 횟수가 5회 미만입니다.")
+            
             AVG = int(np.mean(prices))
 
             # print("최근 5회 거래 평균가:\n", AVG)
@@ -140,7 +142,16 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
             with open('crawling\product_crawling\product_data.csv', "a", newline='') as f:
                 write = csv.writer(f)
                 try:
-                    write.writerow([product_id, img_path, brand,  color[0], color[1], price_og, AVG])
+                    write.writerow([product_id, img_path, brand, name, color[0], color[1], price_og, AVG])
                 except:
-                    write.writerow([product_id, img_path, brand,  color[0], price_og, AVG])
-            time.sleep(2)
+                    write.writerow([product_id, img_path, brand, name, color[0], price_og, AVG])
+            
+            try:
+                print([product_id, img_path, brand, name,  color[0], color[1], price_og, AVG])
+            except:
+                print([product_id, img_path, brand, name,  color[0], price_og, AVG])
+            
+            end = time.time()
+
+            print("진행상황:", "{}/{}".format(nn+1, len(line)), "ETA: {}".format((end-start)*(len(line)-nn+1)))
+            print("\n")
