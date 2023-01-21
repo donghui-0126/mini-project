@@ -13,19 +13,24 @@ from selenium.webdriver.common.by import By
 import time
 import urllib.request
 import csv
+import selenium.common.exceptions
 
 products = []
 
-columns = ["product_id", "img_path","brand", "name", "color1", "color2", "price_og", "price_resell"]
+# columns = ["product_id", "img_path","brand", "name", "color1", "color2", "price_og", "price_resell", "n_scrap"]
 
-with open('crawling\product_crawling\product_data.csv', 'w',newline='') as f: 
+# with open('crawling\product_crawling\product_data.csv', 'a',newline='') as f: 
       
-    # using csv.writer method from CSV package 
-    write = csv.writer(f)
-    write.writerow(columns)
+#     # using csv.writer method from CSV package 
+#     write = csv.writer(f)
+#     write.writerow(columns)
 
 
 driver = webdriver.Chrome()
+
+# 오류시 재시작을 위한 인덱스
+last_index = 286 + 128 + 192 + 108 + 844 + 26 + 42 + 2610
+
 
 with open('crawling\\url_crawling\\products.txt', 'r') as file:    
     line = None    # 변수 line을 None으로 초기화
@@ -33,14 +38,16 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
         line = file.readline().split(" ")
         print("데이터셋 크기:", len(line))
         
-        for nn, product_url in enumerate(line):
+        for nn, product_url in enumerate(line[last_index:]):
             start = time.time()
 
             print("product:", product_url)
             driver.get(product_url)
 
+            
+
             # 신발의 번호를 product_id 변수에 저장함.
-            product_id = product_url[-5:]
+            product_id = product_url.split("/")[-1]
 
             # 이미지 받아서 변수에 저장 | XPATH 사용
             try:
@@ -49,11 +56,14 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
                 # print("이미지 url:\n",img_url)
             # 신발사진이 하나인 경우는 위 XPATH와 달라서 오류가 남.
             # 그래서 try except 문으로 해결함.
+            except selenium.common.exceptions.NoSuchElementException:
+                pass
+            
             except:
-                img = driver.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/div/div/picture/img')
+                img = driver.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[1]/div/div[1]/div[2]/div/div/div/div/picture/img')
                 img_url = img.get_attribute('src')
                 # print("이미지 url:\n",img_url)
-                
+            
 
             # 이미지 전처리
             # 사이즈 줄이기 + 흑백으로 만들기.
@@ -66,7 +76,9 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
                 image = cv2.resize(image, (256,256), interpolation=cv2.INTER_AREA)
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             except:
-                print(product_id, "에서 img-url 오류 발생")
+                print(product_id, "에서 img 전처리 오류 발생")
+                with open("crawling\product_crawling\error.txt", "a") as f:
+                    f.write(product_url+"\n")
                 continue
 
             # 전처리된 이미지 이미지 폴더에 저장
@@ -75,23 +87,37 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
 
 
             # 이름 변수 받기 | XPATH 사용
-            brand = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[1]/div[1]/div/div/a').text
-            name = driver.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[1]/div/div[2]/div/div[1]/div[1]/div/p[1]').text
+            try:
+                brand = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[1]/div[1]/div/div/a').text
+                name = driver.find_element(By.XPATH, '//*[@id="wrap"]/div[2]/div[1]/div/div[2]/div/div[1]/div[1]/div/p[1]').text
+            except:
+                pass
             # print("브랜드: \n", brand, "\n신발명: \n",name)
 
             # 색상 변수 받기
-            colors = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[2]/div/dl/div[3]/dd').text
-            color =  colors.split('/')
+            try:
+                colors = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[2]/div/dl/div[3]/dd').text
+                color =  colors.split('/')
+            except:
+                pass
             # print("색상: \n", color[:2])
 
             # 정가 변수 받기 | XPATH 사용
             try:
                 price_og = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[2]/div/dl/div[4]/dd').text
-                price_og = int(price_og[:-1].replace(",", ""))
             except:
-                price_og = driver.find_element(By.XPATH, '//*[@id="__layout"]/div/div[2]/div[1]/div/div[2]/div/div[2]/div/dl/div[4]/dd').text
-                price_og = int(price_og.split("약 ")[1].split("원")[0].replace(",",""))
-               
+                pass
+            
+            try:
+                price_og = int(price_og[:-1].replace(",", ""))
+            except ValueError:
+                if price_og!="-":
+                    price_og = int(price_og.split("약 ")[1].split("원")[0].replace(",",""))
+                else:
+                    pass
+            except:
+                pass
+
             # print("정가: \n" ,price_og)
 
             # 최근 거래가 받기(로그인 필요함) | XPATH 사용  
@@ -133,25 +159,54 @@ with open('crawling\\url_crawling\\products.txt', 'r') as file:
             except:
                 print(product_id, "의 최근거래 횟수가 5회 미만입니다.")
             
-            AVG = int(np.mean(prices))
-
+            try:
+                AVG = int(np.mean(prices))
+            except:
+                continue
             # print("최근 5회 거래 평균가:\n", AVG)
 
+            # 스크랩수 크롤링
+            try:
+                n_scrap = driver.find_element(By.XPATH,'//*[@id="wrap"]/div[2]/div[1]/div/div[2]/div/div[1]/div[3]/a/span[2]').text
+                
+                if "만" in n_scrap:
+                    n_scrap = int(float(n_scrap.split("만")[0])*10000)
+
+                elif "," in n_scrap:
+                    n_scrap = int(n_scrap.replace(",", ""))
+    
+                else:
+                    n_scrap = int(n_scrap)
+            except:
+                n_scrap = None
 
             # columns = ["product_id", "img_path","brand", "name", "color1", "color2", "price_og", "price_resell"]
             with open('crawling\product_crawling\product_data.csv', "a", newline='') as f:
                 write = csv.writer(f)
                 try:
-                    write.writerow([product_id, img_path, brand, name, color[0], color[1], price_og, AVG])
+                    write.writerow([product_id, img_path, brand, name, color[0], color[1], price_og, AVG, n_scrap])
+                except UnicodeEncodeError:
+                    pass
                 except:
-                    write.writerow([product_id, img_path, brand, name, color[0], price_og, AVG])
+                    write.writerow([product_id, img_path, brand, name, color[0], price_og, AVG, n_scrap])
+                
             
             try:
-                print([product_id, img_path, brand, name,  color[0], color[1], price_og, AVG])
+                print([product_id, img_path, brand, name,  color[0], color[1], price_og, AVG, n_scrap])
             except:
-                print([product_id, img_path, brand, name,  color[0], price_og, AVG])
+                print([product_id, img_path, brand, name,  color[0], price_og, AVG, n_scrap])
             
+
+
+
             end = time.time()
 
-            print("진행상황:", "{}/{}".format(nn+1, len(line)), "ETA: {}".format((end-start)*(len(line)-nn+1)))
+            print("진행상황:", "{}/{}".format(nn+1, len(line)-last_index), "ETA: {}".format((end-start)*(len(line)-nn+1-last_index)))
             print("\n")
+
+
+###########################################################
+
+# https://kream.co.kr/products/23626 
+# https://kream.co.kr/products/37186
+# https://kream.co.kr/products/64246
