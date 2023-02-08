@@ -1,0 +1,23 @@
+Brand/Name regressor and Color regressor loss is very big. (250,000)
+
+i think two model's loss function should be changed. 
+
+1. huber loss
+huber loss is less senstive at outlier data. 
+
+2. L1 loss
+same reason 
+
+3. Kfold should be shuffled
+My datasets are grouped in brand order. 
+Therefore, if you shuffle it, the performance can be improved.
+
+
+Do next coding
+1. kfold parameter: shuffle=True
+2. change lgbm regressor's loss function
+3. change feed-forward netword's loss function
+
+And, I 'm ganna eriment with several models.
+1. https://www.kaggle.com/code/ifeanyinneji/keras-cnn-model-classify-nike-and-adidas-shoes 
+2. VGG net
