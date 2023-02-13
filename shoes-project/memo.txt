@@ -21,3 +21,18 @@ Do next coding
 And, I 'm ganna eriment with several models.
 1. https://www.kaggle.com/code/ifeanyinneji/keras-cnn-model-classify-nike-and-adidas-shoes 
 2. VGG net
+
+
+
+2/13
+
+all regressor performance is very low. (rmse is more than 150,000)
+
+
+so, i have two method.
+
+1. change model dnn to lgbm
+2. method 1 is faild, i crawling again to get color image. 
+
+and make only one model that use CNN. 
+
