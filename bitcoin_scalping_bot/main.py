@@ -9,21 +9,26 @@ import warnings
 warnings.filterwarnings('ignore')
 
 T_horizon = 60
-total_portfolio_value = []
+value_log = []
+action_log = []
+reward_log = []
 
 def main():
     df = pd.read_csv("upbit_data\\train_data_2023.csv", index_col=0)
-    env = Environment(df)
     model = PPO()
     score = 0.0
     print_interval = 20
 
-    for n_epi in tqdm.tqdm(range(100)):
+    for n_epi in tqdm.tqdm(range(10)):
+        env = Environment(df)
         s = env.reset()
         h_out = (torch.zeros([1, 1, 64], dtype=torch.float), torch.zeros([1, 1, 64], dtype=torch.float))
         s = np.array(s, dtype=np.float32)
         done = False
-        portfolio_value_list = []
+        value_list = []
+        action_list = []
+        reward_list = []
+        
         date = 0
         while not done:
             for t in range(T_horizon):
@@ -41,10 +46,10 @@ def main():
                 if r==None:
                     break
                 
-                portfolio_value_list.append(port_value)
+                value_list.append(port_value)
+                action_list.append(a)
+                reward_list.append(r)
                 
-                prob_pre_action = torch.tensor(prob)
-
                 model.put_data([np.array(s, dtype=np.float32),
                             a, r, \
                             np.array(s_prime, dtype=np.float32),\
@@ -54,23 +59,26 @@ def main():
                 s = np.array(s_prime, dtype=np.float32)
                 
                 date += 1
-                
-                if date//720 == 0:
-                    print(port_value)    
+                  
             
                 if done:
                     break
             
             model.train_net()
             
-        total_portfolio_value.append(portfolio_value_list)
+        value_log.append(value_list)
+        action_log.append(action_list)
+        reward_log.append(reward_list)
 
         print("# of episode :{} ".format(n_epi))
-        print(portfolio_value_list)
         
     print("#####")
     print("END")
     print("#####")
-
+    
+    log = pd.DataFrame([value_log, action_log, reward_log]).T
+    log.columns = ["value", "action", "reward"]
+    (log).to_csv("log\\log.csv")
+    
 if __name__ == '__main__':
     main()

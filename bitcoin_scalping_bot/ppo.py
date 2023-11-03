@@ -14,7 +14,7 @@ import numpy as np
 learning_rate = 0.0005
 gamma         = 0.98
 lmbda         = 0.95
-eps_clip      = 0.001
+eps_clip      = 0.0001
 K_epoch       = 4
 
 

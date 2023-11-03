@@ -25,7 +25,7 @@ class Environment:
     PCT_SIGN_IDX = -2 # 1분전 MID price의 가격 변동 부호
     MID_IDX = -1
     
-    def __init__(self, chart_data=None, risk_adverse= 0.5 ,stop_trade=0.90 ,balance=100000000, transaction=0.0005, goalpct_per_hour=0.05):
+    def __init__(self, chart_data=None, risk_adverse= 1.3 ,stop_trade=0.90 ,balance=100000000, transaction=0.0005, goalpct_per_hour=0.05):
         self.chart_data = chart_data
         self.idx = 0
 
