@@ -8,6 +8,7 @@ import numpy as np
 import warnings 
 warnings.filterwarnings('ignore')
 
+epochs = 10
 T_horizon = 60
 value_log = []
 action_log = []
@@ -19,7 +20,7 @@ def main():
     score = 0.0
     print_interval = 20
 
-    for n_epi in tqdm.tqdm(range(10)):
+    for n_epi in tqdm.tqdm(range(epochs)):
         env = Environment(df)
         s = env.reset()
         h_out = (torch.zeros([1, 1, 64], dtype=torch.float), torch.zeros([1, 1, 64], dtype=torch.float))
@@ -76,9 +77,10 @@ def main():
     print("END")
     print("#####")
     
-    log = pd.DataFrame([value_log, action_log, reward_log]).T
-    log.columns = ["value", "action", "reward"]
-    (log).to_csv("log\\log.csv")
+    for epoch in range(epochs):         
+        log = pd.DataFrame([value_log[epoch], action_log[epoch], reward_log[epoch]]).T
+        log.columns = ["value", "action", "reward"]
+        (log).to_csv("log\\log_{}.csv".format(epoch))
     
 if __name__ == '__main__':
     main()
