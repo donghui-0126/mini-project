@@ -34,6 +34,7 @@ def main():
         
         date = 0
         while not done:
+            
             for t in range(T_horizon):
                 h_in = h_out
                 
@@ -61,9 +62,13 @@ def main():
                             h_in, h_out, done])
 
                 s = np.array(s_prime, dtype=np.float32)
-                
+                    
                 date += 1
-                  
+                if date%10000==0:
+                    log = pd.DataFrame([date_log, value_list, action_list, reward_list]).T
+                    log.columns = ["date","value", "action", "reward"]
+                    log.to_csv("log\\log_{}.csv".format(n_epi+1))
+                    print(date)
             
                 if done:
                     break
