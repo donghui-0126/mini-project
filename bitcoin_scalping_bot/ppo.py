@@ -13,8 +13,8 @@ import numpy as np
 #Hyperparameters
 learning_rate = 0.0005
 gamma         = 0.98
-lmbda         = 0.95
-eps_clip      = 0.0001
+lmbda         = 0.99
+eps_clip      = 0.01
 K_epoch       = 4
 
 

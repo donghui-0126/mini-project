@@ -68,14 +68,14 @@ class Environment:
             
             
             if reward>=0:
-                return (s_prime, reward, done, self.portfolio_value[-1])
+                return (s_prime, reward/0.000431, done, self.portfolio_value[-1])
             else:
-                return (s_prime, reward * self.risk_adverse, done, self.portfolio_value[-1])
+                return (s_prime, reward * self.risk_adverse/0.000431, done, self.portfolio_value[-1])
 
         else:
             print("#########################################################################")
             print(f'{self.next_state.name}에서 {self.portfolio_value[-1]}으로 trading stop')
-            return (self.next_state, -100, True, self.portfolio_value[-1]) 
+            return (self.next_state, -1, True, self.portfolio_value[-1]) 
             
     def get_reward(self, action):
         """

@@ -8,8 +8,9 @@ import numpy as np
 import warnings 
 warnings.filterwarnings('ignore')
 
-epochs = 10
+epochs = 100
 T_horizon = 60
+date_log = []
 value_log = []
 action_log = []
 reward_log = []
@@ -21,11 +22,12 @@ def main():
     print_interval = 20
 
     for n_epi in tqdm.tqdm(range(epochs)):
-        env = Environment(df)
+        env = Environment(df, risk_adverse= 2)
         s = env.reset()
         h_out = (torch.zeros([1, 1, 64], dtype=torch.float), torch.zeros([1, 1, 64], dtype=torch.float))
         s = np.array(s, dtype=np.float32)
         done = False
+        date_list = []
         value_list = []
         action_list = []
         reward_list = []
@@ -47,6 +49,7 @@ def main():
                 if r==None:
                     break
                 
+                date_list.append(s_prime.name)
                 value_list.append(port_value)
                 action_list.append(a)
                 reward_list.append(r)
@@ -66,21 +69,17 @@ def main():
                     break
             
             model.train_net()
-            
-        value_log.append(value_list)
-        action_log.append(action_list)
-        reward_log.append(reward_list)
-
-        print("# of episode :{} ".format(n_epi))
+        
+        log = pd.DataFrame([date_log, value_list, action_list, reward_list]).T
+        log.columns = ["date","value", "action", "reward"]
+        log.to_csv("log\\log_{}.csv".format(n_epi+1))
+        
+        print("# of episode :{} ".format(n_epi+1))
         
     print("#####")
     print("END")
     print("#####")
     
-    for epoch in range(epochs):         
-        log = pd.DataFrame([value_log[epoch], action_log[epoch], reward_log[epoch]]).T
-        log.columns = ["value", "action", "reward"]
-        (log).to_csv("log\\log_{}.csv".format(epoch))
-    
+
 if __name__ == '__main__':
     main()
