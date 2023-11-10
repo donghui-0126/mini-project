@@ -2,24 +2,25 @@ import torch
 from torch.distributions import Categorical 
 from env import Environment
 from ppo import PPO
+from ppo2 import PPO2
 import tqdm
 import pandas as pd
 import numpy as np
 import warnings 
 warnings.filterwarnings('ignore')
 
-epochs = 100
 T_horizon = 60
 date_log = []
 value_log = []
 action_log = []
 reward_log = []
 
-def main():
+def main(model_name, risk_adverse, epochs = 100):
     df = pd.read_csv("upbit_data\\train_data_2023.csv", index_col=0)
-    model = PPO()
-    score = 0.0
-    print_interval = 20
+    if model_name=="ppo":
+        model = PPO()
+    if model_name=="ppo2":
+        model = PPO2()
 
     for n_epi in tqdm.tqdm(range(epochs)):
         env = Environment(df, risk_adverse= 2)
@@ -87,4 +88,4 @@ def main():
     
 
 if __name__ == '__main__':
-    main()
+    main(model_name="ppo", risk_adverse=1., epochs=1000)

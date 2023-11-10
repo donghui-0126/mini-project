@@ -27,13 +27,15 @@ class PPO(nn.Module):
         self.fc2 = nn.Linear(122, 64)
         self.lstm = nn.LSTM(64, 64)
 
-        self.fc_pi1 = nn.Linear(64, 32)
-        self.fc_pi2 = nn.Linear(32, 16)
-        self.fc_pi3 = nn.Linear(16, 11)
+        self.fc_pi1 = nn.Linear(64, 128)
+        self.fc_pi2 = nn.Linear(128, 64)
+        self.fc_pi3 = nn.Linear(64, 32)
+        self.fc_pi4 = nn.Linear(32, 11)
 
         self.fc_v1 = nn.Linear(64, 32)
-        self.fc_v2 = nn.Linear(32, 8)
-        self.fc_v3 = nn.Linear(8, 1)
+        self.fc_v2 = nn.Linear(32, 16)
+        self.fc_v3 = nn.Linear(16, 8)
+        self.fc_v4 = nn.Linear(8, 1)
 
         self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
 
@@ -44,7 +46,8 @@ class PPO(nn.Module):
         x, lstm_hidden = self.lstm(x, hidden)
         x = F.relu(self.fc_pi1(x))
         x = F.relu(self.fc_pi2(x))
-        prob = F.softmax(self.fc_pi3(x), dim=2)
+        x = F.relu(self.fc_pi3(x))
+        prob = F.softmax(self.fc_pi4(x), dim=2)
 
         return prob, lstm_hidden
 
@@ -55,7 +58,9 @@ class PPO(nn.Module):
         x, lstm_hidden = self.lstm(x, hidden)
         x = F.relu(self.fc_v1(x))
         x = F.relu(self.fc_v2(x))
-        v = self.fc_v3(x)
+        x = F.relu(self.fc_v3(x))
+
+        v = self.fc_v4(x)
 
         return v
 

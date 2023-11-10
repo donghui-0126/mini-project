@@ -68,9 +68,9 @@ class Environment:
             
             
             if reward>=0:
-                return (s_prime, reward/0.000431, done, self.portfolio_value[-1])
+                return (s_prime, reward/0.0004, done, self.portfolio_value[-1])
             else:
-                return (s_prime, reward * self.risk_adverse/0.000431, done, self.portfolio_value[-1])
+                return (s_prime, reward * self.risk_adverse/0.0004, done, self.portfolio_value[-1])
 
         else:
             print("#########################################################################")
@@ -196,6 +196,6 @@ class Environment:
         
         
         elif action == 5:
-            reward = 0     
+            reward = -1. * 0.0004    
             return reward
         
