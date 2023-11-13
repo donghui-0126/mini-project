@@ -23,9 +23,12 @@ def main(model_name, risk_adverse, epochs = 100):
         model = PPO2()
 
     for n_epi in tqdm.tqdm(range(epochs)):
-        env = Environment(df, risk_adverse= 2)
+        env = Environment(df, risk_adverse= 2, transaction=0.0005)
         s = env.reset()
-        h_out = (torch.zeros([1, 1, 64], dtype=torch.float), torch.zeros([1, 1, 64], dtype=torch.float))
+        
+        h1_out = (torch.zeros([1, 1, 64], dtype=torch.float), torch.zeros([1, 1, 64], dtype=torch.float))
+        h2_out = (torch.zeros([1, 1, 64], dtype=torch.float), torch.zeros([1, 1, 64], dtype=torch.float))
+        
         s = np.array(s, dtype=np.float32)
         done = False
         date_list = []
@@ -37,9 +40,10 @@ def main(model_name, risk_adverse, epochs = 100):
         while not done:
             
             for t in range(T_horizon):
-                h_in = h_out
+                h1_in = h1_out
+                h2_in = h2_out
                 
-                prob, h_out = model.pi(torch.from_numpy(s).float(), h_in)
+                prob, h1_out, h2_out = model.pi(torch.from_numpy(s).float(), h1_in, h2_in)
                 
                 prob = prob.view(-1)
                 
@@ -60,7 +64,7 @@ def main(model_name, risk_adverse, epochs = 100):
                             a, r, \
                             np.array(s_prime, dtype=np.float32),\
                             prob[a].item(),\
-                            h_in, h_out, done])
+                            h1_in, h1_out, h2_in, h2_out, done])
 
                 s = np.array(s_prime, dtype=np.float32)
                     
@@ -88,4 +92,4 @@ def main(model_name, risk_adverse, epochs = 100):
     
 
 if __name__ == '__main__':
-    main(model_name="ppo", risk_adverse=1., epochs=1000)
+    main(model_name="ppo", risk_adverse=1.2, epochs=100)
