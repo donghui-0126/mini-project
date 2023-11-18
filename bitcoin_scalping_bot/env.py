@@ -40,8 +40,8 @@ class Environment:
         self.current_price = self.chart_data.iloc[self.idx, self.MID_IDX]
         self.next_price = self.chart_data.iloc[self.idx+1, self.MID_IDX]
         
-        self.balance = [balance/2]  # 포트폴리오가 보유한 현금
-        self.bitcoin = [balance/2/self.current_price]  # 포트폴리오가 보유한 비트코인의 가치 
+        self.balance = [balance]  # 포트폴리오가 보유한 현금
+        self.bitcoin = [0]  # 포트폴리오가 보유한 비트코인의 가치 (매 거래마다 바로 청산됨)
         self.portfolio_value = [balance]
 
     def reset(self):
@@ -55,11 +55,14 @@ class Environment:
         self.current_price = self.chart_data.iloc[self.idx, self.MID_IDX]
         self.next_price = self.chart_data.iloc[self.idx+1, self.MID_IDX]
 
-        current_value = self.balance[-1] + self.bitcoin[-1]*(1+self.current_price)
+
+
+        current_value = self.balance[-1] + self.bitcoin[-1]*self.current_price
         self.portfolio_value.append(current_value)
         
+        
         # 학습이 끝나거나 만약 시드의 self.stop_trade%를 잃는다면 손절 
-        if ((self.chart_data).shape[0] >= self.idx+1) and (self.portfolio_value[0]*self.stop_trade <= self.portfolio_value[-1]):
+        if ((self.chart_data).shape[0] > self.idx+1) and (self.portfolio_value[0]*self.stop_trade <= self.portfolio_value[-1]):
             s_prime = self.chart_data.iloc[self.idx+1]
             reward = self.get_reward(action) * 100 # -1~1 사이의 loss값이 나오도록 적절하게 scaling
             done = False
@@ -67,9 +70,9 @@ class Environment:
             
             
             if reward>=0:
-                return (s_prime, reward/0.0004, done, self.portfolio_value[-1])
+                return (s_prime, reward, done, self.portfolio_value[-1])
             else:
-                return (s_prime, reward * self.risk_adverse/0.0004, done, self.portfolio_value[-1])
+                return (s_prime, reward ** self.risk_adverse, done, self.portfolio_value[-1])
 
         else:
             print("#########################################################################")
@@ -91,106 +94,117 @@ class Environment:
         
         # BUY
         if action >= 6:
-            # 보유 현금 5% 매수
+            # 보유 현금 25% 매수
             if action == 6:
-                buy_ratio = 0.5
+                buy_ratio = 0.25
                 buy_budget = self.balance[-1] * buy_ratio
-                self.balance.append(self.balance[-1]-buy_budget-buy_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]+buy_budget/self.current_price)  
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(buy_budget/self.current_price)  
         
                 reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
                 return reward
             
-            # 보유 현금 10% 매수
-            elif action == 7:
-                buy_ratio = 0.10
-                buy_budget = self.balance[-1] * buy_ratio
-                self.balance.append(self.balance[-1]-buy_budget- buy_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]+buy_budget/self.current_price)  
-                
-                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
-                return reward
-            
-            # 보유 현금 25% 매수
-            elif action == 8:
-                buy_ratio = 0.25
-                buy_budget = self.balance[-1] * buy_ratio
-                self.balance.append(self.balance[-1]-buy_budget- buy_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]+buy_budget/self.current_price)  
-            
-                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
-                return reward
-            
             # 보유 현금 50% 매수
-            elif action == 9:
+            elif action == 7:
                 buy_ratio = 0.5
                 buy_budget = self.balance[-1] * buy_ratio
-                self.balance.append(self.balance[-1]-buy_budget- buy_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]+buy_budget/self.current_price)  
-                
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(buy_budget/self.current_price)  
+        
+                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
+                return reward
+                        
+            # 보유 현금 100% 매수
+            elif action == 8:
+                buy_ratio = 1
+                buy_budget = self.balance[-1] * buy_ratio
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(buy_budget/self.current_price)  
+        
                 reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
                 return reward
             
-            # 보유 현금 100% 매수
-            elif action == 10:
-                buy_ratio = 1
+            # 보유 현금 200% 매수
+            elif action == 9:
+                buy_ratio = 2
                 buy_budget = self.balance[-1] * buy_ratio
-                self.balance.append(self.balance[-1]-buy_budget- buy_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]+buy_budget/self.current_price)  
-                
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(buy_budget/self.current_price)  
+        
                 reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
                 return reward
+            
+            # 보유 현금 300% 매수
+            elif action == 10:
+                buy_ratio = 3
+                buy_budget = self.balance[-1] * buy_ratio
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(buy_budget/self.current_price)  
+        
+                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
+                return reward
+            
             
         # SELL
         elif action <= 4:
-            # 보유 coin의 5% 매도
+            # 보유 현금의 25% 공매도
             if action == 0:
-                sell_ratio = 0.5
-                sell_budget = self.bitcoin[-1] * sell_ratio
-                self.balance.append(self.balance[-1]+sell_budget*self.current_price - sell_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]-sell_budget)
-                
-                reward = -self.next_state.iloc[self.PCT_IDX] * sell_ratio
-                return reward
-            
-            # 보유 coin의 10% 매도
-            if action == 1:
-                sell_ratio = 0.10
-                sell_budget = self.bitcoin[-1] * sell_ratio
-                self.balance.append(self.balance[-1]+sell_budget*self.current_price - sell_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]-sell_budget)
-                
-                reward = -self.next_state.iloc[self.PCT_IDX] * sell_ratio
-                return reward
-
-            # 보유 coin의 25% 매도
-            if action == 2:
                 sell_ratio = 0.25
-                sell_budget = self.bitcoin[-1] * sell_ratio
-                self.balance.append(self.balance[-1]+sell_budget*self.current_price - sell_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]-sell_budget)
-                
-                reward = -self.next_state.iloc[self.PCT_IDX] * sell_ratio
-                return reward
-
-            # 보유 coin의 50% 매도
-            if action == 3:
-                sell_ratio = 0.50
-                sell_budget = self.bitcoin[-1] * sell_ratio
-                self.balance.append(self.balance[-1]+sell_budget*self.current_price - sell_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]-sell_budget)
-                
-                reward = -self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                sell_budget = self.balance[-1] * sell_ratio
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(-sell_budget/self.current_price)  
+        
+                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
                 return reward
             
-            # 보유 coin의 100% 매도
-            if action == 4:
+            # 보유 coin의 50% 공매도
+            if action == 1:
+                sell_ratio = 0.5
+                sell_budget = self.balance[-1] * sell_ratio
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(-sell_budget/self.current_price)  
+        
+                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                return reward
+
+            # 보유 coin의 100% 공매도
+            if action == 2:
                 sell_ratio = 1
-                sell_budget = self.bitcoin[-1] * sell_ratio
-                self.balance.append(self.balance[-1]+sell_budget*self.current_price - sell_budget*self.transaction)
-                self.bitcoin.append(self.bitcoin[-1]-sell_budget)
-                
-                reward = -self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                sell_budget = self.balance[-1] * sell_ratio
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(-sell_budget/self.current_price)  
+        
+                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                return reward
+
+            # 보유 coin의 200% 공매도
+            if action == 3:
+                sell_ratio = 2
+                sell_budget = self.balance[-1] * sell_ratio
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(-sell_budget/self.current_price)  
+        
+                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                return reward
+            
+            # 보유 coin의 300% 공매도
+            if action == 4:
+                sell_ratio = 3
+                sell_budget = self.balance[-1] * sell_ratio
+                clearing_budget = self.bitcoin[-1] * self.current_price
+                self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
+                self.bitcoin.append(-sell_budget/self.current_price)  
+        
+                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
                 return reward
         
         

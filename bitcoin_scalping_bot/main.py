@@ -49,7 +49,7 @@ def main(model_name, risk_adverse, epochs = 100):
                 
                 m = Categorical(prob)
                 
-                a = m.sample().item() # softmax에서 0~11의 값을 뱉어내므로 -5를 통해서 내가 설계한 action으로 만들어 준다. => 그냥 action의 인덱스를 바꿈
+                a = m.sample().item() # softmax에서 0~11의 값을 뱉어내므로 -5를 통해서 내가 설계한 action으로 만들어 준다. => 그 action의 인덱스를 바꿈
                 s_prime, r, done, port_value = env.step(a)
                 
                 if r==None:
