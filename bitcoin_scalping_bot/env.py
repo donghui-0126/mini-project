@@ -43,7 +43,9 @@ class Environment:
         self.balance = [balance]  # 포트폴리오가 보유한 현금
         self.bitcoin = [0]  # 포트폴리오가 보유한 비트코인의 가치 (매 거래마다 바로 청산됨)
         self.portfolio_value = [balance]
-
+        self.action_list = [5]
+        self.transaction_list = [0.25,0.5,1,2,3,0,0.25,0.5,1,2,3]
+        
     def reset(self):
         self.idx = 0
         state = self.chart_data.iloc[self.idx]
@@ -67,12 +69,13 @@ class Environment:
             reward = self.get_reward(action) * 100 # -1~1 사이의 loss값이 나오도록 적절하게 scaling
             done = False
             self.idx += 1
-            
+
+            self.action_list.append(action)
             
             if reward>=0:
                 return (s_prime, reward, done, self.portfolio_value[-1])
             else:
-                return (s_prime, reward ** self.risk_adverse, done, self.portfolio_value[-1])
+                return (s_prime, reward * self.risk_adverse, done, self.portfolio_value[-1])
 
         else:
             print("#########################################################################")
@@ -102,7 +105,7 @@ class Environment:
                 self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(buy_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * buy_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
             
             # 보유 현금 50% 매수
@@ -113,7 +116,7 @@ class Environment:
                 self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(buy_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * buy_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
                         
             # 보유 현금 100% 매수
@@ -124,7 +127,7 @@ class Environment:
                 self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(buy_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * buy_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
             
             # 보유 현금 200% 매수
@@ -135,7 +138,7 @@ class Environment:
                 self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(buy_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * buy_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
             
             # 보유 현금 300% 매수
@@ -146,7 +149,7 @@ class Environment:
                 self.balance.append(self.balance[-1] - buy_budget + clearing_budget - (buy_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(buy_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * buy_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * buy_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
             
             
@@ -160,7 +163,7 @@ class Environment:
                 self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(-sell_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * sell_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
             
             # 보유 coin의 50% 공매도
@@ -171,7 +174,7 @@ class Environment:
                 self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(-sell_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * sell_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
 
             # 보유 coin의 100% 공매도
@@ -182,7 +185,7 @@ class Environment:
                 self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(-sell_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * sell_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
 
             # 보유 coin의 200% 공매도
@@ -193,7 +196,7 @@ class Environment:
                 self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(-sell_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * sell_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
             
             # 보유 coin의 300% 공매도
@@ -204,7 +207,7 @@ class Environment:
                 self.balance.append(self.balance[-1] + sell_budget + clearing_budget - (sell_budget+abs(clearing_budget))*self.transaction)
                 self.bitcoin.append(-sell_budget/self.current_price)  
         
-                reward = self.next_state.iloc[self.PCT_IDX] * sell_ratio
+                reward = (self.next_state.iloc[self.PCT_IDX]-self.transaction) * sell_ratio - self.transaction_list[self.action_list[-1]]
                 return reward
         
         

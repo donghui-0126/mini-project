@@ -23,7 +23,7 @@ def main(model_name, risk_adverse, epochs = 100):
         model = PPO2()
 
     for n_epi in tqdm.tqdm(range(epochs)):
-        env = Environment(df, risk_adverse= 2, transaction=0.0005)
+        env = Environment(df, risk_adverse = risk_adverse, transaction=0.0004)
         s = env.reset()
         
         h1_out = (torch.zeros([1, 1, 64], dtype=torch.float), torch.zeros([1, 1, 64], dtype=torch.float))
