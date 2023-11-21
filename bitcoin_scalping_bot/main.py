@@ -15,7 +15,7 @@ value_log = []
 action_log = []
 reward_log = []
 
-def main(model_name, risk_adverse, epochs = 100):
+def main(model_name, risk_adverse, epochs = 100, transaction=0.0002):
     df = pd.read_csv("upbit_data\\train_data_2023.csv", index_col=0)
     if model_name=="ppo":
         model = PPO()
@@ -23,7 +23,7 @@ def main(model_name, risk_adverse, epochs = 100):
         model = PPO2()
 
     for n_epi in tqdm.tqdm(range(epochs)):
-        env = Environment(df, risk_adverse = risk_adverse, transaction=0.0004)
+        env = Environment(df, risk_adverse = risk_adverse, transaction=transaction)
         s = env.reset()
         
         h1_out = (torch.zeros([1, 1, 64], dtype=torch.float), torch.zeros([1, 1, 64], dtype=torch.float))
@@ -35,6 +35,8 @@ def main(model_name, risk_adverse, epochs = 100):
         value_list = []
         action_list = []
         reward_list = []
+        balance_list = []
+        coin_list = []
         
         date = 0
         while not done:
@@ -50,7 +52,7 @@ def main(model_name, risk_adverse, epochs = 100):
                 m = Categorical(prob)
                 
                 a = m.sample().item() # softmax에서 0~11의 값을 뱉어내므로 -5를 통해서 내가 설계한 action으로 만들어 준다. => 그 action의 인덱스를 바꿈
-                s_prime, r, done, port_value = env.step(a)
+                s_prime, r, done, port_value, balance, coin = env.step(a)
                 
                 if r==None:
                     break
@@ -59,6 +61,8 @@ def main(model_name, risk_adverse, epochs = 100):
                 value_list.append(port_value)
                 action_list.append(a)
                 reward_list.append(r)
+                balance_list.append(balance)
+                coin_list.append(coin)
                 
                 model.put_data([np.array(s, dtype=np.float32),
                             a, r, \
@@ -70,8 +74,8 @@ def main(model_name, risk_adverse, epochs = 100):
                     
                 date += 1
                 if date%10000==0:
-                    log = pd.DataFrame([date_log, value_list, action_list, reward_list]).T
-                    log.columns = ["date","value", "action", "reward"]
+                    log = pd.DataFrame([date_log, value_list, action_list, reward_list, balance_list, coin_list]).T
+                    log.columns = ["date","value", "action", "reward", "balance", "coin"]
                     log.to_csv("log\\log_{}.csv".format(n_epi+1))
                     print(date)
             
@@ -80,8 +84,8 @@ def main(model_name, risk_adverse, epochs = 100):
             
             model.train_net()
         
-        log = pd.DataFrame([date_log, value_list, action_list, reward_list]).T
-        log.columns = ["date","value", "action", "reward"]
+        log = pd.DataFrame([date_log, value_list, action_list, reward_list, balance_list, coin_list]).T
+        log.columns = ["date","value", "action", "reward", "balance", "coin"]
         log.to_csv("log\\log_{}.csv".format(n_epi+1))
         
         print("# of episode :{} ".format(n_epi+1))
@@ -92,4 +96,4 @@ def main(model_name, risk_adverse, epochs = 100):
     
 
 if __name__ == '__main__':
-    main(model_name="ppo", risk_adverse=1.2, epochs=100)
+    main(model_name="ppo", risk_adverse=1.2, epochs=500, transaction=0.0004/5)
