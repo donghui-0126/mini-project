@@ -96,4 +96,4 @@ def main(model_name, risk_adverse, epochs = 100, transaction=0.0002):
     
 
 if __name__ == '__main__':
-    main(model_name="ppo", risk_adverse=1.2, epochs=500, transaction=0.0004/5)
+    main(model_name="ppo", risk_adverse=1.2, epochs=1, transaction=0)
