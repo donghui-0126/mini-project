@@ -18,8 +18,6 @@ def main(model_name, risk_adverse, epochs = 100, transaction=0.0002):
     df = pd.read_csv("upbit_data\\train_data_2023.csv", index_col=0)
     if model_name=="ppo":
         model = PPO()
-    if model_name=="ppo2":
-        model = PPO2()
 
     for n_epi in tqdm.tqdm(range(epochs)):
         env = Environment(df, risk_adverse = risk_adverse, transaction=transaction)
